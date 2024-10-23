@@ -1,9 +1,10 @@
 import "./App.css";
+import AllRoutes from "./components/Routes";
 
 function App() {
   return (
     <>
-      <h1 className="text-3xl font-bold underline">Hello world mayur!</h1>
+      <AllRoutes />
     </>
   );
 }
