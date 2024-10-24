@@ -11,8 +11,9 @@ const Login = () => {
     <div>
       <Navbar />
       <div className="absolute">
+        <div className="absolute h-full w-full opacity-40 bg-black"></div>
         <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/7c0e18aa-2c95-474d-802e-7f30e75dcca4/web/IN-en-20241014-TRIFECTA-perspective_e7121311-c11e-4809-a3e6-22abffa33569_small.jpg"
+          src="https://assets.nflxext.com/ffe/siteui/vlv3/74d734ca-0eab-4cd9-871f-bca01823d872/web/IN-en-20241021-TRIFECTA-perspective_2277eb50-9da3-4fdf-adbe-74db0e9ee2cf_large.jpg"
           alt="image"
         />
       </div>
