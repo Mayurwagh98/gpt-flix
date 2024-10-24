@@ -11,21 +11,24 @@ const Login = () => {
         />
       </div>
 
-      <form className="bg-black w-1/3 p-16 flex flex-col absolute mx-auto right-0 left-0 top-1/3 bg-opacity-80 rounded">
+      <form className="bg-black w-1/3 p-16 flex flex-col absolute mx-auto right-0 left-0 top-1/4 bg-opacity-80 rounded">
         <h1 className="text-white text-4xl my-2">Sign In</h1>
         <input
           type="email"
           placeholder="Enter your email"
-          className="h-[3rem] my-4 p-2 rounded bg-[#0f0f0f] text-white border-[1px] white"
+          className="h-[3rem] my-4 p-2 rounded bg-[#0f0f0f] text-white border-[#606060] border-[1px] outline-none"
         />
         <input
           type="password"
           placeholder="Enter your password"
-          className="h-[3rem] my-4 p-2 rounded bg-[#0f0f0f] text-white border-[1px] white"
+          className="h-[3rem] my-4 p-2 rounded bg-[#0f0f0f] text-white border-[#606060] border-[1px] outline-none"
         />
         <button className="w-full h-10 text-white bg-[#e50a13] rounded my-2">
           Sign In
         </button>
+        <p className="text-[#828584] my-2 cursor-pointer">
+          New to Netflix? <span className="text-white">Sign up now</span>
+        </p>
       </form>
     </div>
   );
