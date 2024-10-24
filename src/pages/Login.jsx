@@ -35,18 +35,24 @@ const Login = () => {
           {signIn ? "Sign In" : "Sign Up"}
         </button>
         {signIn ? (
-          <p
-            className="text-[#828584] my-2 cursor-pointer"
-            onClick={handleIsSignIn}
-          >
-            New to Netflix? <span className="text-white">Sign up now</span>
+          <p className="text-[#828584] my-2">
+            New to Netflix?{" "}
+            <span
+              className="text-white cursor-pointer"
+              onClick={handleIsSignIn}
+            >
+              Sign up now
+            </span>
           </p>
         ) : (
-          <p
-            className="text-[#828584] my-2 cursor-pointer"
-            onClick={handleIsSignIn}
-          >
-            Already have an account? <span className="text-white">Sign In</span>
+          <p className="text-[#828584] my-2">
+            Already have an account?{" "}
+            <span
+              className="text-white cursor-pointer"
+              onClick={handleIsSignIn}
+            >
+              Sign In
+            </span>
           </p>
         )}
       </form>
