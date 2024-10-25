@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import { validateForm } from "../utils/validate";
+import { createUserWithEmailAndPassword } from "firebase/auth/web-extension";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const [signIn, setSignin] = useState(true);
@@ -18,8 +20,27 @@ const Login = () => {
       email.current.value,
       password.current.value,
     );
-    console.log(validation);
     setErrorMessage(validation);
+
+    if (validation) return;
+
+    if (!signIn) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value,
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+        });
+    }
   };
 
   return (
