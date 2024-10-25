@@ -1,12 +1,26 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Navbar from "../components/Navbar";
+import { validateForm } from "../utils/validate";
 
 const Login = () => {
   const [signIn, setSignin] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+  const fullName = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
 
   const handleIsSignIn = () => {
     setSignin(!signIn);
   };
+
+  const handleSubmitForm = () => {
+    const validation = validateForm(
+      email.current.value,
+      password.current.value,
+    );
+    setErrorMessage(validation);
+  };
+
   return (
     <div>
       <Navbar />
@@ -18,21 +32,38 @@ const Login = () => {
         />
       </div>
 
-      <form className="bg-black w-1/3 p-16 flex flex-col absolute mx-auto right-0 left-0 top-1/4 bg-opacity-80 rounded">
+      <form
+        className="bg-black w-1/3 p-16 flex flex-col absolute mx-auto right-0 left-0 top-1/4 bg-opacity-80 rounded"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <h1 className="text-white text-4xl my-2">
           {signIn ? "Sign In" : "Sign Up"}
         </h1>
+        {!signIn && (
+          <input
+            ref={fullName}
+            type="text"
+            placeholder="Enter your full name"
+            className="h-[3rem] my-4 p-2 rounded bg-[#0f0f0f] text-white border-[#606060] border-[1px] outline-none"
+          />
+        )}
         <input
+          ref={email}
           type="email"
           placeholder="Enter your email"
           className="h-[3rem] my-4 p-2 rounded bg-[#0f0f0f] text-white border-[#606060] border-[1px] outline-none"
         />
         <input
+          ref={password}
           type="password"
           placeholder="Enter your password"
           className="h-[3rem] my-4 p-2 rounded bg-[#0f0f0f] text-white border-[#606060] border-[1px] outline-none"
         />
-        <button className="w-full h-10 text-white bg-[#e50a13] rounded my-2">
+        <p className="text-red-600">{errorMessage}</p>
+        <button
+          className="w-full h-10 text-white bg-[#e50a13] rounded my-2"
+          onClick={handleSubmitForm}
+        >
           {signIn ? "Sign In" : "Sign Up"}
         </button>
         {signIn ? (
