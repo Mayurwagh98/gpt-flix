@@ -18,6 +18,7 @@ const Login = () => {
       email.current.value,
       password.current.value,
     );
+    console.log(validation);
     setErrorMessage(validation);
   };
 
