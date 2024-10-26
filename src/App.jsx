@@ -12,6 +12,8 @@ function App() {
   const navigate = useNavigate();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      // this code works in all condition signin/signup
+      // if removed the after sign in user info wont show
       if (user) {
         const { uid, email, displayName, photoURL } = user;
         dispatch(

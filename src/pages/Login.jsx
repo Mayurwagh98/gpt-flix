@@ -4,10 +4,14 @@ import { validateForm } from "../utils/validate";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth/web-extension";
 import { auth } from "../utils/firebase";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [signIn, setSignin] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const fullName = useRef(null);
@@ -36,7 +40,26 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          console.log(user);
+          // updating name
+          updateProfile(user, {
+            displayName: fullName.current.value,
+            photoURL: "https://avatars.githubusercontent.com/u/69896733?v=4",
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = user;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                }),
+              );
+            })
+            .catch((error) => {
+              const errorMessage = error.message;
+              setErrorMessage(errorMessage);
+            });
         })
         .catch((error) => {
           const errorMessage = error.message;
@@ -51,7 +74,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
         })
         .catch((error) => {
           const errorMessage = error.message;

@@ -19,7 +19,7 @@ const Navbar = () => {
       {user && (
         <div className="flex w-1/5 py-2">
           <img
-            src="https://avatars.githubusercontent.com/u/69896733?v=4"
+            src={user?.photoURL}
             alt="img"
             className="mx-4 w-9"
           />
