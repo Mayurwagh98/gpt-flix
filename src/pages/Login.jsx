@@ -47,6 +47,7 @@ const Login = () => {
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = user;
+               // const { uid, email, displayName, photoURL } = auth.currentUser;
               dispatch(
                 addUser({
                   uid: uid,
