@@ -1,5 +1,12 @@
+import Navbar from "../components/Navbar";
+
 const Browse = () => {
-  return <h1>Browse</h1>;
+  return (
+    <>
+      <Navbar />
+      <h1>Browse</h1>
+    </>
+  );
 };
 
 export default Browse;
