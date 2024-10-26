@@ -1,7 +1,10 @@
 import { useRef, useState } from "react";
 import Navbar from "../components/Navbar";
 import { validateForm } from "../utils/validate";
-import { createUserWithEmailAndPassword } from "firebase/auth/web-extension";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth/web-extension";
 import { auth } from "../utils/firebase";
 
 const Login = () => {
@@ -36,9 +39,23 @@ const Login = () => {
           console.log(user);
         })
         .catch((error) => {
-          const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(errorCode, errorMessage);
+          setErrorMessage(errorMessage);
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value,
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          console.log(user);
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          setErrorMessage(errorMessage);
         });
     }
   };
