@@ -11,7 +11,7 @@ const Browse = () => {
   return (
     <>
       <Navbar />
-      <h1>Welcome {user?.displayName}</h1>
+      {/* <h1>Welcome {user?.displayName}</h1> */}
       <MainContainer />
     </>
   );
