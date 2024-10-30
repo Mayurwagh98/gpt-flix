@@ -1,14 +1,16 @@
-import { useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
 import useNowPlayingMovies from "../customHooks/useNowPlayingMovies";
 import MainContainer from "../components/MainContainer";
 import AllMovies from "../components/AllMovies";
+import usePopularMovies from "../customHooks/usePopularMovies";
+import useTopRatedMovies from "../customHooks/useTopRatedMovies";
+import useUpcomingMovies from "../customHooks/useUpcomingMovies";
 
 const Browse = () => {
-  const user = useSelector((store) => store.user);
-
   useNowPlayingMovies();
-
+  usePopularMovies();
+  useTopRatedMovies();
+  useUpcomingMovies()
   return (
     <>
       <Navbar />
