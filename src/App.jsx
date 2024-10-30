@@ -6,6 +6,7 @@ import { auth } from "./utils/firebase";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addUser, removeUser } from "./utils/userSlice";
+import { user_avatar } from "./utils/constants";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ function App() {
             uid: uid,
             email: email,
             displayName: displayName,
-            photoURL: photoURL,
+            photoURL: user_avatar,
           }),
         );
         navigate("/browse");
