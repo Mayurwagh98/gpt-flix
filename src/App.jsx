@@ -12,7 +12,7 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unSubscribe = onAuthStateChanged(auth, (user) => {
       // this code works in all condition signin/signup
       // if removed the after sign in user info wont show
       if (user) {
@@ -31,6 +31,8 @@ function App() {
         navigate("/");
       }
     });
+
+    return () => unSubscribe();
   }, []);
   return (
     <>
