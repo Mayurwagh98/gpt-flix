@@ -13,7 +13,7 @@ const Navbar = () => {
   };
   return (
     <nav className="w-full h-[4rem] absolute flex justify-between items-center px-2 z-10 bg-gradient-to-b from-black">
-      <h1 className="text-[3rem] w-full font-bold text-[#C62E2E] mx-[2rem] my-2 contrast-150 ">
+      <h1 className="text-[2.5rem] w-full font-bold text-[#C62E2E] mx-[2rem] my-2 contrast-150 ">
         GPTFLIX
       </h1>
       {user && (
