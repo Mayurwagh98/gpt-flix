@@ -7,13 +7,13 @@ const nowPlayingMoviesSlice = createSlice({
   },
 
   reducers:{
-    getNowPlayingMovies:(state, action) =>{
+    addNowPlayingMovies:(state, action) =>{
       state.nowPlayingMovies = action.payload
     }
   }
 
 })
 
-export const {getNowPlayingMovies} = nowPlayingMoviesSlice.actions
+export const {addNowPlayingMovies} = nowPlayingMoviesSlice.actions
 
 export default nowPlayingMoviesSlice.reducer
