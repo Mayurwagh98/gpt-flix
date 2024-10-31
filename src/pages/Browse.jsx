@@ -5,18 +5,26 @@ import AllMovies from "../components/AllMovies";
 import usePopularMovies from "../customHooks/usePopularMovies";
 import useTopRatedMovies from "../customHooks/useTopRatedMovies";
 import useUpcomingMovies from "../customHooks/useUpcomingMovies";
+import { useSelector } from "react-redux";
+import GptSearch from "../components/GptSearch";
 
 const Browse = () => {
+  const gptFlagStore = useSelector((store) => store.gptFlag.gptFlag);
   useNowPlayingMovies();
   usePopularMovies();
   useTopRatedMovies();
-  useUpcomingMovies()
+  useUpcomingMovies();
   return (
     <>
       <Navbar />
-      {/* <h1>Welcome {user?.displayName}</h1> */}
-      <MainContainer />
-      <AllMovies />
+      {gptFlagStore ? (
+        <GptSearch />
+      ) : (
+        <>
+          <MainContainer />
+          <AllMovies />
+        </>
+      )}
     </>
   );
 };

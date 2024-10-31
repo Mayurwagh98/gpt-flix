@@ -6,6 +6,7 @@ import { addGptSearchFlag } from "../utils/gptSlice";
 const Navbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
+  const gptFlagStore = useSelector((store) => store.gptFlag.gptFlag);
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {})
@@ -28,7 +29,7 @@ const Navbar = () => {
             onClick={handleGptFlag}
             className="bg-[#640D5F] text-white h-[35px] rounded px-2 w-[9rem]"
           >
-            GPT Search
+            {gptFlagStore ? "Home" : "GPT Search"}
           </button>
           <img src={user?.photoURL} alt="img" className="mx-4 w-9" />
           <button
