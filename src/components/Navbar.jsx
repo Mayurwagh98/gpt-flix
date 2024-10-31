@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../utils/firebase";
 import { addGptSearchFlag } from "../utils/gptSlice";
 import { SUPPORTED_LANGUAGES } from "../utils/constants";
+import { changeLanguage } from "../utils/langSlice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,11 @@ const Navbar = () => {
   const handleGptFlag = () => {
     dispatch(addGptSearchFlag());
   };
+
+  const handleLangChange = (e) => {
+    console.log(e.target.value);
+    dispatch(changeLanguage(e.target.value));
+  };
   return (
     <nav className="w-full h-[4rem] absolute flex justify-between items-center px-2 z-10 bg-gradient-to-b from-black">
       <h1 className="text-[2.5rem] w-full font-bold text-[#C62E2E] mx-[2rem] my-2 contrast-150 ">
@@ -27,9 +33,14 @@ const Navbar = () => {
       {user && (
         <div className="flex w-1/2 py-2 justify-center items-center">
           {gptFlagStore && (
-            <select className="bg-gray-700 py-2 px-2 rounded text-white mx-2 outline-none cursor-pointer">
+            <select
+              className="bg-gray-700 py-2 px-2 rounded text-white mx-2 outline-none cursor-pointer"
+              onChange={handleLangChange}
+            >
               {SUPPORTED_LANGUAGES?.map((lang) => (
-                <option key={lang.identifier}>{lang.name}</option>
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
               ))}
             </select>
           )}
