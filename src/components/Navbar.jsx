@@ -2,6 +2,7 @@ import { signOut } from "firebase/auth/cordova";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../utils/firebase";
 import { addGptSearchFlag } from "../utils/gptSlice";
+import { SUPPORTED_LANGUAGES } from "../utils/constants";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,15 @@ const Navbar = () => {
         GPTFLIX
       </h1>
       {user && (
-        <div className="flex w-1/3 py-2 justify-center items-center">
+        <div className="flex w-1/2 py-2 justify-center items-center">
+          {gptFlagStore && (
+            <select className="bg-gray-700 py-2 px-2 rounded text-white mx-2 outline-none cursor-pointer">
+              {SUPPORTED_LANGUAGES?.map((lang) => (
+                <option key={lang.identifier}>{lang.name}</option>
+              ))}
+            </select>
+          )}
+
           <button
             onClick={handleGptFlag}
             className="bg-[#640D5F] text-white h-[35px] rounded px-2 w-[9rem]"
