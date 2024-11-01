@@ -23,34 +23,35 @@ const GptSearchBar = () => {
   };
 
   const handleSearchMovie = async () => {
-    console.log(searchText.current.value);
+    try {
+      const gptQuery =
+        "Act as a Movie Recommendation system and suggest some movies for the query : " +
+        searchText.current.value +
+        ". only give me names of 5 movies, comma seperated like the example result given ahead. Example Result: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya";
+      const gptSearchedRes = await openAi.chat.completions.create({
+        messages: [{ role: "user", content: gptQuery }],
+        model: "gpt-3.5-turbo",
+      });
+      const speratingMovies =
+        gptSearchedRes.choices?.[0]?.message?.content?.split(","); // ["Andaz Apna Apna", "Hera Pheri", "Chupke Chupke", "Jaane Bhi Do Yaaro", "Padosan"]
 
-    const gptQuery =
-      "Act as a Movie Recommendation system and suggest some movies for the query : " +
-      searchText.current.value +
-      ". only give me names of 5 movies, comma seperated like the example result given ahead. Example Result: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya";
+      // For each movie I will search TMDB API
+      const promiseArray = speratingMovies?.map((movie) =>
+        searchForMovies(movie),
+      ); //returns a array of promise
 
-    const gptSearchedRes = await openAi.chat.completions.create({
-      messages: [{ role: "user", content: gptQuery }],
-      model: "gpt-3.5-turbo",
-    });
+      const tmdbRes = await Promise.all(promiseArray);
+
+      console.log(tmdbRes);
+
+      dispatch(
+        addGptMoviesRes({ moviesName: speratingMovies, moviesRes: tmdbRes }),
+      );
+    } catch (error) {
+      console.log(error);
+    }
 
     // Andaz Apna Apna, Hera Pheri, Chupke Chupke, Jaane Bhi Do Yaaro, Padosan
-    const speratingMovies =
-      gptSearchedRes.choices?.[0]?.message?.content?.split(","); // ["Andaz Apna Apna", "Hera Pheri", "Chupke Chupke", "Jaane Bhi Do Yaaro", "Padosan"]
-
-    // For each movie I will search TMDB API
-    const promiseArray = speratingMovies?.map((movie) =>
-      searchForMovies(movie),
-    ); //returns a array of promise
-
-    const tmdbRes = await Promise.all(promiseArray);
-
-    console.log(tmdbRes);
-
-    dispatch(
-      addGptMoviesRes({ moviesName: speratingMovies, moviesRes: tmdbRes }),
-    );
   };
 
   return (
