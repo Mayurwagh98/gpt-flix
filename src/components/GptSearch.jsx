@@ -4,7 +4,7 @@ import GptSearchBar from "./GptSearchBar";
 const GptSearch = () => {
   return (
     <>
-      <div className="absolute -z-10">
+      <div className="fixed -z-10">
         <div className="absolute h-full w-full opacity-40 bg-black"></div>
         <img src={LOGIN_BG_IMG} alt="image" />
       </div>
