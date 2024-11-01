@@ -10,7 +10,6 @@ const MainContainer = () => {
   if (!movies) return;
 
   const singleMovie = movies[0];
-  console.log(singleMovie);
 
   const { original_title, overview, id, poster_path } = singleMovie;
 

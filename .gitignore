@@ -10,6 +10,7 @@ lerna-debug.log*
 .firebase
 .firebase.json
 src/utils/firebase.js
+src/utils/openaiKey.js
 .env
 .env.local
 .env.development.local
