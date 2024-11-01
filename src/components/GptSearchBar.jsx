@@ -42,6 +42,7 @@ const GptSearchBar = () => {
 
       const tmdbRes = await Promise.all(promiseArray);
 
+    // Andaz Apna Apna, Hera Pheri, Chupke Chupke, Jaane Bhi Do Yaaro, Padosan
       console.log(tmdbRes);
 
       dispatch(
@@ -51,7 +52,6 @@ const GptSearchBar = () => {
       console.log(error);
     }
 
-    // Andaz Apna Apna, Hera Pheri, Chupke Chupke, Jaane Bhi Do Yaaro, Padosan
   };
 
   return (
