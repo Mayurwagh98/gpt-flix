@@ -1,10 +1,12 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import langConstants from "../utils/langConstants";
 import { useRef } from "react";
 import openAi from "../utils/openai";
 import { API_OPTIONS } from "../utils/constants";
+import { addGptMoviesRes } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
+  const dispatch = useDispatch();
   const langKey = useSelector((store) => store.lang.lang);
   const searchText = useRef(null);
 
@@ -38,11 +40,17 @@ const GptSearchBar = () => {
       gptSearchedRes.choices?.[0]?.message?.content?.split(","); // ["Andaz Apna Apna", "Hera Pheri", "Chupke Chupke", "Jaane Bhi Do Yaaro", "Padosan"]
 
     // For each movie I will search TMDB API
-    const promiseArray = speratingMovies?.map((movie) => searchText(movie)); //returns a array of promise
+    const promiseArray = speratingMovies?.map((movie) =>
+      searchForMovies(movie),
+    ); //returns a array of promise
 
     const tmdbRes = await Promise.all(promiseArray);
 
     console.log(tmdbRes);
+
+    dispatch(
+      addGptMoviesRes({ moviesName: speratingMovies, moviesRes: tmdbRes }),
+    );
   };
 
   return (
