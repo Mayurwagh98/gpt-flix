@@ -9,7 +9,7 @@ import {
 import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { LOGIN_BG_IMG, photo_url, user_avatar } from "../utils/constants";
+import { LOGIN_BG_IMG, user_avatar } from "../utils/constants";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -48,7 +48,7 @@ const Login = () => {
           })
             .then(() => {
               const { uid, email, displayName, photoURL } = user;
-               // const { uid, email, displayName, photoURL } = auth.currentUser;
+              // const { uid, email, displayName, photoURL } = auth.currentUser;
               dispatch(
                 addUser({
                   uid: uid,
@@ -89,14 +89,11 @@ const Login = () => {
       <Navbar />
       <div className="absolute">
         <div className="absolute h-full w-full opacity-40 bg-black"></div>
-        <img
-          src={LOGIN_BG_IMG}
-          alt="image"
-        />
+        <img src={LOGIN_BG_IMG} alt="image" className="h-screen object-cover md:h-screen w-screen"/>
       </div>
 
       <form
-        className="bg-black w-1/3 p-16 flex flex-col absolute mx-auto right-0 left-0 top-1/4 bg-opacity-80 rounded"
+        className="bg-black w-[95%] md:w-1/3 p-16 flex flex-col absolute mx-auto right-0 left-0 top-1/4 bg-opacity-80 rounded"
         onSubmit={(e) => e.preventDefault()}
       >
         <h1 className="text-white text-4xl my-2">

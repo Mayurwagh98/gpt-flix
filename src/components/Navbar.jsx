@@ -22,7 +22,6 @@ const Navbar = () => {
   };
 
   const handleLangChange = (e) => {
-    console.log(e.target.value);
     dispatch(changeLanguage(e.target.value));
   };
   return (
