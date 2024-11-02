@@ -4,7 +4,7 @@ import { useRef } from "react";
 // import openAi from "../utils/openai";
 import { API_OPTIONS } from "../utils/constants";
 import { addGptMoviesRes } from "../utils/gptSlice";
-import { OPENAI_KEY } from "../utils/openaiKey";
+import { GEMINI_KEY } from "../utils/openaiKey";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const GptSearchBar = () => {
@@ -26,14 +26,13 @@ const GptSearchBar = () => {
 
   const handleSearchMovie = async () => {
     try {
-      const gptQuery = `Act as a Movie Recommendation system. Suggest exactly 5 movie names for the query: "${searchText.current.value}". Format the response as: "Movie1, Movie2, Movie3, Movie4, Movie5".`;
-
       //   const gptSearchedRes = await openAi.chat.completions.create({
       //     messages: [{ role: "user", content: gptQuery }],
       //     model: "gpt-3.5-turbo",
       //   });
       // gptSearchedRes.choices?.[0]?.message?.content?.split(","); // ["Andaz Apna Apna", "Hera Pheri", "Chupke Chupke", "Jaane Bhi Do Yaaro", "Padosan"]
-      const genAI = new GoogleGenerativeAI(OPENAI_KEY);
+      const gptQuery = `Act as a Movie Recommendation system. Suggest exactly 5 movie names for the query: "${searchText.current.value}". Format the response as: "Movie1, Movie2, Movie3, Movie4, Movie5".`;
+      const genAI = new GoogleGenerativeAI(GEMINI_KEY);
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
       const gptSearchedRes = await model.generateContent(gptQuery);
@@ -42,16 +41,12 @@ const GptSearchBar = () => {
         gptSearchedRes?.response?.candidates?.[0]?.content?.parts?.[0]?.text?.split(
           ",",
         ); // ["Andaz Apna Apna", "Hera Pheri", "Chupke Chupke", "Jaane Bhi Do Yaaro", "Padosan"]
-      console.log(speratingMovies);
       // For each movie I will search TMDB API
       const promiseArray = speratingMovies?.map((movie) =>
         searchForMovies(movie),
       ); //returns a array of promise
 
-      const tmdbRes = await Promise.all(promiseArray);
-
-      // Andaz Apna Apna, Hera Pheri, Chupke Chupke, Jaane Bhi Do Yaaro, Padosan
-      console.log(tmdbRes);
+      const tmdbRes = await Promise.all(promiseArray); // Andaz Apna Apna, Hera Pheri, Chupke Chupke, Jaane Bhi Do Yaaro, Padosan
 
       dispatch(
         addGptMoviesRes({ moviesName: speratingMovies, moviesRes: tmdbRes }),
