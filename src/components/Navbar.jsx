@@ -26,12 +26,12 @@ const Navbar = () => {
     dispatch(changeLanguage(e.target.value));
   };
   return (
-    <nav className="w-full h-[4rem] absolute flex justify-between items-center px-2 z-10 bg-gradient-to-b from-black">
-      <h1 className="text-[2.5rem] w-full font-bold text-[#C62E2E] mx-[2rem] my-2 contrast-150 ">
+    <nav className="w-full h-[4rem] absolute items-center px-2 z-10 bg-gradient-to-b from-black flex flex-col md:flex-row justify-between">
+      <h1 className="text-[2.5rem] w-full font-bold text-[#C62E2E] mx-auto md:mx-[2rem] my-2 contrast-150">
         GPTFLIX
       </h1>
       {user && (
-        <div className="flex w-1/2 py-2 justify-center items-center">
+        <div className="flex py-2 justify-center items-center md:w-1/2">
           {gptFlagStore && (
             <select
               className="bg-gray-700 py-2 px-2 rounded text-white mx-2 outline-none cursor-pointer"
@@ -51,9 +51,13 @@ const Navbar = () => {
           >
             {gptFlagStore ? "Home" : "GPT Search"}
           </button>
-          <img src={user?.photoURL} alt="img" className="mx-4 w-9" />
+          <img
+            src={user?.photoURL}
+            alt="img"
+            className="hidden mx-4 w-9 md:block"
+          />
           <button
-            className="bg-black text-white p-2 text-sm rounded flex justify-center items-center"
+            className="bg-black text-white p-2 text-sm rounded flex justify-center items-center mx-2 md:mx-0"
             onClick={handleSignOut}
           >
             Sign Out
