@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import langConstants from "../utils/langConstants";
 import { useRef } from "react";
-import openAi from "../utils/openai";
+// import openAi from "../utils/openai";
 import { API_OPTIONS } from "../utils/constants";
 import { addGptMoviesRes } from "../utils/gptSlice";
+import { OPENAI_KEY } from "../utils/openaiKey";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const GptSearchBar = () => {
   const dispatch = useDispatch();
@@ -24,17 +26,23 @@ const GptSearchBar = () => {
 
   const handleSearchMovie = async () => {
     try {
-      const gptQuery =
-        "Act as a Movie Recommendation system and suggest some movies for the query : " +
-        searchText.current.value +
-        ". only give me names of 5 movies, comma seperated like the example result given ahead. Example Result: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya";
-      const gptSearchedRes = await openAi.chat.completions.create({
-        messages: [{ role: "user", content: gptQuery }],
-        model: "gpt-3.5-turbo",
-      });
-      const speratingMovies =
-        gptSearchedRes.choices?.[0]?.message?.content?.split(","); // ["Andaz Apna Apna", "Hera Pheri", "Chupke Chupke", "Jaane Bhi Do Yaaro", "Padosan"]
+      const gptQuery = `Act as a Movie Recommendation system. Suggest exactly 5 movie names for the query: "${searchText.current.value}". Format the response as: "Movie1, Movie2, Movie3, Movie4, Movie5".`;
 
+      //   const gptSearchedRes = await openAi.chat.completions.create({
+      //     messages: [{ role: "user", content: gptQuery }],
+      //     model: "gpt-3.5-turbo",
+      //   });
+      // gptSearchedRes.choices?.[0]?.message?.content?.split(","); // ["Andaz Apna Apna", "Hera Pheri", "Chupke Chupke", "Jaane Bhi Do Yaaro", "Padosan"]
+      const genAI = new GoogleGenerativeAI(OPENAI_KEY);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+      const gptSearchedRes = await model.generateContent(gptQuery);
+
+      const speratingMovies =
+        gptSearchedRes?.response?.candidates?.[0]?.content?.parts?.[0]?.text?.split(
+          ",",
+        ); // ["Andaz Apna Apna", "Hera Pheri", "Chupke Chupke", "Jaane Bhi Do Yaaro", "Padosan"]
+      console.log(speratingMovies);
       // For each movie I will search TMDB API
       const promiseArray = speratingMovies?.map((movie) =>
         searchForMovies(movie),
@@ -42,7 +50,7 @@ const GptSearchBar = () => {
 
       const tmdbRes = await Promise.all(promiseArray);
 
-    // Andaz Apna Apna, Hera Pheri, Chupke Chupke, Jaane Bhi Do Yaaro, Padosan
+      // Andaz Apna Apna, Hera Pheri, Chupke Chupke, Jaane Bhi Do Yaaro, Padosan
       console.log(tmdbRes);
 
       dispatch(
@@ -51,7 +59,6 @@ const GptSearchBar = () => {
     } catch (error) {
       console.log(error);
     }
-
   };
 
   return (
