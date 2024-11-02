@@ -5,7 +5,7 @@ const AllMovies = () => {
   const movies = useSelector((store) => store.nowPlayingMovies);
   return (
     <div className="bg-black">
-      <div className="relative z-2 -mt-36 pl-4">
+      <div className="-mt-8 md:-mt-52 pl-4 md:pl-12 relative z-20">
         <MoviesList title={"Now Playing"} movies={movies.nowPlayingMovies} />
         <MoviesList title={"Popular"} movies={movies.popularMovies} />
         <MoviesList title={"Top Rated"} movies={movies.topRatedMovies} />
